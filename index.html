@@ -22,6 +22,10 @@
         <h2>Make space<br>for your best work.</h2>
         <p class="side-note">One clear view of everything on your plate.</p>
       </div>
+      <nav class="sidebar-nav" aria-label="Workspace navigation">
+        <a href="#assignmentsContent"><span aria-hidden="true">◷</span> Assignments <strong id="sidebarAssignmentCount">0</strong></a>
+        <a href="#groupsContent"><span aria-hidden="true">◎</span> Study groups <strong id="sidebarGroupCount">0</strong></a>
+      </nav>
       <div class="sidebar-footer">
         <span class="status-dot"></span>
         <span>Saved on this device</span>
@@ -29,6 +33,10 @@
     </aside>
 
     <main class="main-content" id="appContent" aria-live="polite">
+      <a class="mobile-brand" href="#" aria-label="Study Mission home">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span>Study<span class="brand-accent">Mission</span></span>
+      </a>
       <header class="topbar">
         <div>
           <p class="eyebrow" id="currentDate"></p>
@@ -95,6 +103,21 @@
         </div>
         <div class="assignment-list" id="assignmentList" aria-live="polite"></div>
       </section>
+
+      <section class="groups-section" id="groupsContent">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Study together</p>
+            <h2>Study groups</h2>
+          </div>
+          <div class="group-actions">
+            <button class="button button-secondary" id="joinGroupButton" type="button">Join group</button>
+            <button class="button button-primary" id="createGroupButton" type="button">Create group</button>
+          </div>
+        </div>
+        <p id="groupNotice" class="auth-notice" hidden></p>
+        <div class="group-list" id="groupList" aria-live="polite"></div>
+      </section>
     </main>
   </div>
 
@@ -131,9 +154,59 @@
       </form>
     </section>
   </div>
+
+  <div class="modal-backdrop" id="groupModalBackdrop" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="groupModalTitle">
+      <button class="close-button" id="closeGroupModalButton" type="button" aria-label="Close dialog">×</button>
+      <p class="eyebrow" id="groupModalEyebrow">Study group</p>
+      <h2 id="groupModalTitle">Create group</h2>
+      <form id="groupForm">
+        <label for="groupNameInput">Group name</label>
+        <input id="groupNameInput" name="groupName" type="text" placeholder="e.g. Biology study crew" maxlength="60" required>
+        <label for="inviteCodeInput" id="inviteCodeLabel" hidden>Invite code</label>
+        <input id="inviteCodeInput" name="inviteCode" type="text" placeholder="e.g. A7KQ2M" maxlength="6" hidden>
+        <p id="groupModalNotice" class="auth-notice" hidden></p>
+        <button class="button button-primary button-full" type="submit" id="submitGroupButton">Create group</button>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="sharedAssignmentModalBackdrop" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="sharedAssignmentModalTitle">
+      <button class="close-button" id="closeSharedAssignmentModalButton" type="button" aria-label="Close dialog">×</button>
+      <p class="eyebrow">Shared mission</p>
+      <h2 id="sharedAssignmentModalTitle">Add shared assignment</h2>
+      <form id="sharedAssignmentForm">
+        <label for="sharedAssignmentName">Assignment name</label>
+        <input id="sharedAssignmentName" name="name" type="text" placeholder="e.g. Review chapter 4" maxlength="80" required>
+        <div class="form-row">
+          <div>
+            <label for="sharedAssignmentSubject">Subject</label>
+            <select id="sharedAssignmentSubject" name="subject" required>
+              <option value="">Choose subject</option>
+              <option>Mathematics</option><option>Science</option><option>English</option><option>History</option><option>Art & Design</option><option>Languages</option><option>Computer Science</option><option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="sharedAssignmentDueDate">Due date</label>
+            <input id="sharedAssignmentDueDate" name="dueDate" type="date" required>
+          </div>
+        </div>
+        <fieldset>
+          <legend>Priority</legend>
+          <div class="priority-options">
+            <label class="priority-option priority-low"><input type="radio" name="priority" value="Low"><span>Low</span></label>
+            <label class="priority-option priority-medium"><input type="radio" name="priority" value="Medium" checked><span>Medium</span></label>
+            <label class="priority-option priority-high"><input type="radio" name="priority" value="High"><span>High</span></label>
+          </div>
+        </fieldset>
+        <button class="button button-primary button-full" type="submit">Add shared assignment <span aria-hidden="true">→</span></button>
+      </form>
+    </section>
+  </div>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=13"></script>
 </body>
 </html>
