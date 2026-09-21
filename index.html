@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#162d28">
+  <title>Study Mission | Assignment planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-hidden="true">
+      <a class="brand" href="#" aria-label="Study Mission home">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span>Study<span class="brand-accent">Mission</span></span>
+      </a>
+      <div class="side-copy">
+        <p class="eyebrow">Your command centre</p>
+        <h2>Make space<br>for your best work.</h2>
+        <p class="side-note">One clear view of everything on your plate.</p>
+      </div>
+      <div class="sidebar-footer">
+        <span class="status-dot"></span>
+        <span>Saved on this device</span>
+      </div>
+    </aside>
+
+    <main class="main-content" id="appContent" aria-live="polite">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="currentDate"></p>
+          <h1><span id="greetingTime">Good morning</span>, <span id="greetingName" class="highlight">scholar.</span></h1>
+        </div>
+        <div class="topbar-actions">
+          <div class="auth-card" aria-live="polite">
+            <form id="authGuest" class="auth-form">
+              <input id="usernameInput" type="text" placeholder="Username" aria-label="Username">
+              <input id="passwordInput" type="password" placeholder="Password" aria-label="Password">
+              <div class="auth-actions">
+                <button class="button button-secondary" id="signUpButton" type="submit" data-auth-mode="signup">Sign up</button>
+                <button class="button button-secondary" id="loginButton" type="submit" data-auth-mode="login">Log in</button>
+              </div>
+            </form>
+            <div id="authUser" class="auth-user" hidden>
+              <span class="user-label">Signed in as</span>
+              <span id="currentUserName"></span>
+              <button class="button button-secondary" id="logoutButton" type="button">Log out</button>
+            </div>
+            <p id="authNotice" class="auth-notice">Sign up or log in to sync assignments to your account.</p>
+          </div>
+          <button class="button button-primary" id="addAssignmentButton" type="button">
+            <span class="button-icon" aria-hidden="true">+</span>
+            Add assignment
+          </button>
+        </div>
+      </header>
+
+      <section class="dashboard" id="dashboardContent" aria-label="Assignment overview">
+        <article class="stat-card stat-card-dark">
+          <div class="stat-icon">◷</div>
+          <div><p class="stat-label">To do</p><p class="stat-value" id="unfinishedCount">0</p></div>
+          <span class="stat-caption">unfinished</span>
+        </article>
+        <article class="stat-card stat-card-lilac">
+          <div class="stat-icon">✓</div>
+          <div><p class="stat-label">Completed</p><p class="stat-value" id="completedCount">0</p></div>
+          <span class="stat-caption">all time</span>
+        </article>
+        <article class="stat-card stat-card-coral">
+          <div class="stat-icon">!</div>
+          <div><p class="stat-label">High priority</p><p class="stat-value" id="highPriorityCount">0</p></div>
+          <span class="stat-caption">unfinished</span>
+        </article>
+        <article class="next-up-card">
+          <div class="next-up-heading"><span class="next-up-label">Up next</span><span class="arrow-mark">↗</span></div>
+          <p class="next-up-name" id="nextAssignmentName">No upcoming work</p>
+          <p class="next-up-due" id="nextAssignmentDue">Add an assignment to get started</p>
+        </article>
+      </section>
+
+      <section class="assignments-section" id="assignmentsContent">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Your workload</p>
+            <h2>Assignments <span class="count-pill" id="assignmentCount">0</span></h2>
+          </div>
+          <div class="view-controls" role="group" aria-label="Assignment filters">
+            <button class="filter-button active" data-filter="all" type="button">All</button>
+            <button class="filter-button" data-filter="active" type="button">To do</button>
+            <button class="filter-button" data-filter="completed" type="button">Completed</button>
+          </div>
+        </div>
+        <div class="assignment-list" id="assignmentList" aria-live="polite"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="close-button" id="closeModalButton" type="button" aria-label="Close dialog">×</button>
+      <p class="eyebrow" id="modalEyebrow">New mission</p>
+      <h2 id="modalTitle">Add assignment</h2>
+      <form id="assignmentForm">
+        <label for="assignmentName">Assignment name</label>
+        <input id="assignmentName" name="name" type="text" placeholder="e.g. Read chapter 4" maxlength="80" required>
+        <div class="form-row">
+          <div>
+            <label for="assignmentSubject">Subject</label>
+            <select id="assignmentSubject" name="subject" required>
+              <option value="">Choose subject</option>
+              <option>Mathematics</option><option>Science</option><option>English</option><option>History</option><option>Art & Design</option><option>Languages</option><option>Computer Science</option><option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="assignmentDueDate">Due date</label>
+            <input id="assignmentDueDate" name="dueDate" type="date" required>
+          </div>
+        </div>
+        <fieldset>
+          <legend>Priority</legend>
+          <div class="priority-options">
+            <label class="priority-option priority-low"><input type="radio" name="priority" value="Low"><span>Low</span></label>
+            <label class="priority-option priority-medium"><input type="radio" name="priority" value="Medium" checked><span>Medium</span></label>
+            <label class="priority-option priority-high"><input type="radio" name="priority" value="High"><span>High</span></label>
+          </div>
+        </fieldset>
+        <button class="button button-primary button-full" type="submit" id="submitAssignmentButton">Add assignment <span aria-hidden="true">→</span></button>
+      </form>
+    </section>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="app.js?v=3"></script>
+</body>
+</html>
